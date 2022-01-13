@@ -1,5 +1,5 @@
-import express from "express";
+import { server } from "./http";
+import "./websocket/ChatService";
 
-const app = express();
 
-app.listen(3000, ()=> console.log("Servidor rodando na porta 3000"));
+server.listen(3000, ()=> console.log("Servidor rodando na porta 3000"));

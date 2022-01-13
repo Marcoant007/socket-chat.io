@@ -1,0 +1,113 @@
+.user_name_list {
+  cursor: pointer;
+  padding: 6px;
+}
+
+.user_name {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.img_user {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user_name_date {
+  margin-left: 20px;
+}
+
+.messages {
+  padding: 10px;
+}
+
+.chat_message {
+  display: flex;
+  padding: 5px 20px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+}
+
+.user_logged {
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.user_logged img {
+  margin-right: 10px;
+}
+
+.message_user {
+  overflow-y: scroll;
+  height: 90vh;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #374151 #28303b;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #374151;
+  border-radius: 20px;
+  border: 3px solid #28303b;
+}
+
+.user_in_focus {
+  background: #374151;
+  border-radius: 5px;
+  opacity: 0.7;
+}
+
+.nav_avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.user_name_list {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.user_name_list img {
+  margin-right: 10px;
+}
+
+.avatar_user_logged {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.notification {
+  width: 20px;
+  height: 20px;
+  background: #ff0101;
+  border-radius: 50%;
+  margin: 3px -4px -27px -11px;
+  border: 2px solid #000;
+  position: absolute;
+}
+
+.hidden {
+  display: none;
+}

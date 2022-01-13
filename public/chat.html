@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/tailwind.min.css"
+      integrity="sha512-RntatPOhEcQEA81gC/esYoCkGkL7AYV7TeTPoU+R9zE44/yWxVvLIBfBSaMu78rhoDd73ZeRHXRJN5+aPEK53Q=="
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <title>Websocket</title>
+  </head>
+
+  <body>
+    <div class="w-screen h-screen">
+      <div class="flex flex-1 text-white">
+        <!-- Left -->
+        <div class="w-3/12 h-screen bg-gray-900 position-relative">
+          <div id="users" class="m-3">
+            <div class="bg-green w-4"></div>
+            <ul id="users_list">
+              <!-- <li
+                class="user_name_list"
+                id="user_${user._id}"
+                idUser="${user._id}"
+              >
+                <img
+                  class="nav_avatar"
+                  src="https://avatars.githubusercontent.com/u/20424197?v=4"
+                />
+                Danilo
+              </li> -->
+            </ul>
+          </div>
+
+          <div class="footer w-3/12">
+            <div class="user_logged">
+              <!-- <img
+                class="avatar_user_logged"
+                src="https://avatars.githubusercontent.com/u/20424197?v=4"
+              />
+              <strong id="user_logged">Danilo</strong> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div class="w-9/12 bg-gray-700" id="c_message">
+          <div class="message_user" id="message_user">
+            <!-- <span class="user_name user_name_date">
+              <img
+                class="img_user"
+                src="https://avatars.githubusercontent.com/u/5041791?v=4"
+              />
+              <strong>Daniele Leão Evangelista</strong>
+              <span> 20/10/2020</span></span
+            >
+            <div class="messages">
+              <span class="chat_message"> Oi tudo bem?</span>
+            </div> -->
+          </div>
+
+          <input
+            type="text"
+            id="user_message"
+            class="
+              shadow
+              bg-gray-600
+              absolute
+              bottom-0
+              w-8/12
+              m-3
+              p-2
+              rounded
+              focus:outline-none
+              hidden
+            "
+            placeholder="Digite sua mensagem"
+          />
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
+      integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"
+      integrity="sha512-eVL5Lb9al9FzgR63gDs1MxcDS2wFu3loYAgjIH0+Hg38tCS8Ag62dwKyH+wzDb+QauDpEZjXbMn11blw8cbTJQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/chat.js"></script>
+  </body>
+</html>

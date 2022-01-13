@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/tailwind.min.css"
+        integrity="sha512-RntatPOhEcQEA81gC/esYoCkGkL7AYV7TeTPoU+R9zE44/yWxVvLIBfBSaMu78rhoDd73ZeRHXRJN5+aPEK53Q=="
+        crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/forms@0.3.2/src/index.js">
+
+    <title>Websocket</title>
+</head>
+
+<body>
+
+    <div class="flex  justify-center">
+        <div class="w-full max-w-2xl	">
+            <form action="chat.html" class="bg-white shadow-md rounded px-8 pt-6 pb-12 mb-8">
+                <div class="mb-8">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Nome
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="name" name="name" type="text" placeholder="Digite seu Nome">
+                </div>
+
+                <div class="mb-8">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Email
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="email" name="email" type="text" placeholder="Digite seu e-mail">
+                </div>
+
+
+                <div class="mb-8">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Avatar
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="avatar" name="avatar" type="text" placeholder="Digite seu avatar">
+                </div>
+
+                <div class="md:flex md:items-center">
+                    <div class="md:w-2/3">
+                        <button
+                            class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                            type="submit">
+                            Acessar
+                        </button>
+                    </div>
+            </form>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
