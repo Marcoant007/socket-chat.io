@@ -1,6 +1,6 @@
 const socket = io("http://localhost:3000");
 
-let roomId = "";
+let idChatRoom = "";
 
 function onLoad() {
 
@@ -52,19 +52,40 @@ function addUser(user) {
     </li> `;
 };
 
+socket.on("message", (data)=> {
+    console.log("Message:", data);
+})
+
+
+
 document.getElementById("users_list").addEventListener("click", (event) => {
     if(event.target && event.target.matches("li.user_name_list")) {
         const idUser = event.target.getAttribute("idUser");
         
 
         socket.emit("start_chat", {idUser}, (data)=> {
-            console.log(data);
-            roomId = data.idChatRoom;
+            idChatRoom = data.idChatRoom;
         })
 
-        console.log("room: ", roomId)
+    
     }
 })
+
+document.getElementById("user_message").addEventListener("keypress", (e)=> {
+    if(e.key === "Enter"){
+        const message = e.target.value;
+        e.target.value = "";
+
+
+        const data = {
+            message,
+            idChatRoom
+        }
+
+        socket.emit("message", data)
+    }
+})
+
 
 
 onLoad();
