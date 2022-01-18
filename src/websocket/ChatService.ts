@@ -5,6 +5,7 @@ import { CreateMessageService } from "../services/CreateMessageService";
 import { CreateUserUserService } from "../services/CreateUserService";
 import { GetAllUsersService } from "../services/GetAllUsersService";
 import { GetChatRoomByUsersService } from "../services/GetChatRoomByUsersService";
+import { GetMessagesByChatRoomService } from "../services/GetMessagesByChatRoomService";
 import { GetUserBySocketIdService } from "../services/GetUserBySocketIdService";
 
 //recupera a conexão com o servidor
@@ -28,10 +29,11 @@ io.on("connect", socket => {
         callback(users)//essa é minha função de retorno
     });
 
-    socket.on("start_chat", async (data, callback) => {
+    socket.on("start_chat", async (data, callback) => { //iniciar o chat 
         const createChatRoomService = container.resolve(CreateChatRoomService);
         const getChatRoomByUsersService = container.resolve(GetChatRoomByUsersService);
         const getUserBySocketIdService = container.resolve(GetUserBySocketIdService);
+        const getMessageByChatRoomService = container.resolve(GetMessagesByChatRoomService);
 
         const userLogged = await getUserBySocketIdService.execute(socket.id);
 
@@ -41,22 +43,27 @@ io.on("connect", socket => {
             room = await createChatRoomService.execute([data.idUser, userLogged._id]);
 
         }
-        socket.join(room.idChatRoom) // estou conectando 2 usuários em uma sala 
-        callback(room);
+        socket.join(room.idChatRoom); // estou conectando 2 usuários em uma sala 
+
+        //Buscar mensagens da sala 
+        const messages = await getMessageByChatRoomService.execute(room.idChatRoom); //vai retonar todas as mensagens que a sala tiver 
+        
+        callback({room, messages});
     });
 
     socket.on("message", async (data) => {
         // Buscar as informações do usuário (socket.id)
+       
         const getUserBySocketIdService = container.resolve(GetUserBySocketIdService);
         const user = await getUserBySocketIdService.execute(socket.id);
 
         const createMessageService = container.resolve(CreateMessageService);
 
         const message = await createMessageService.execute({
-            to: user._id,
+            to: user?._id,
             text: data.message,
-            roomId: data.id
-        })
+            roomId: data.idChatRoom,
+        });
         // Salvar a mensagem 
 
         io.to(data.idChatRoom).emit("message", {
@@ -65,7 +72,7 @@ io.on("connect", socket => {
         })// como eu quero enviar informação para todos usuários vou usar a comunicação global
 
         // Enviar a mensagem para outros usuários da sala 
-
+       
 
     })
 
