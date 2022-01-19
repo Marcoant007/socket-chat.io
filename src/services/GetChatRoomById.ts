@@ -8,5 +8,4 @@ class GetChatRoomByIdService {
         return room;
     }
 }
-
 export {GetChatRoomByIdService}

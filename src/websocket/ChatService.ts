@@ -21,8 +21,7 @@ io.on("connect", socket => {
     socket.on("get_users", async (callback) => {
         const getAllUsersService = container.resolve(GetAllUsersService);
         const users = await getAllUsersService.execute();
-
-        callback(users)//essa é minha função de retorno
+        callback(users)
     });
 
     socket.on("start_chat", async (data, callback) => { //iniciar o chat 
@@ -49,7 +48,6 @@ io.on("connect", socket => {
 
     socket.on("message", async (data) => {
         // Buscar as informações do usuário (socket.id)
-       
         const getUserBySocketIdService = container.resolve(GetUserBySocketIdService);
         const user = await getUserBySocketIdService.execute(socket.id); // usuário que envia a mensagem
 
@@ -63,6 +61,7 @@ io.on("connect", socket => {
         });
         // Salvar a mensagem 
 
+
         io.to(data.idChatRoom).emit("message", {
             message,
             user //vamos passar o user pq quando for montar a tela vai precisar saber qual usuário esta mandando mensagem
@@ -71,7 +70,6 @@ io.on("connect", socket => {
         //enviar notificação para usuário correto
         const room = await getChatRoomByIdService.execute(data.idChatRoom);
         const userFrom = room.idUsers.find(response => response._id !== user._id);
-        
         io.to(userFrom.socket_id).emit("notification", {
             newMessage: true,
             roomId: data.idChatRoom,

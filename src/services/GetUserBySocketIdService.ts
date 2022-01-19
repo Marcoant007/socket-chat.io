@@ -7,5 +7,4 @@ class GetUserBySocketIdService {
         return user;
     }
 }
-
 export { GetUserBySocketIdService}

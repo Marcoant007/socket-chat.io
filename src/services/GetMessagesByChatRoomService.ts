@@ -5,7 +5,6 @@ import { Message } from "../schemas/Message";
 
 @injectable()
 class GetMessagesByChatRoomService {
-
     async execute(roomId: string) {
         const messages = await Message.find({
             roomId,
@@ -13,6 +12,5 @@ class GetMessagesByChatRoomService {
 
         return messages;
     }
-
 }
 export { GetMessagesByChatRoomService };

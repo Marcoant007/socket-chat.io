@@ -1,6 +1,5 @@
 import { injectable } from "tsyringe";
 import { User } from "../schemas/User"
-
 interface CreateUserDTO {
     email: string;
     socket_id: string;
@@ -12,7 +11,6 @@ interface CreateUserDTO {
 class CreateUserUserService {
     async execute({ email, socket_id, avatar, name }: CreateUserDTO) {
         const userAlreadyExists = await User.findOne({ email }).exec();
-
         if (userAlreadyExists) {
             const user = await User.findOneAndUpdate(
                 { _id: userAlreadyExists._id },
@@ -29,9 +27,7 @@ class CreateUserUserService {
             });
             return user;
         }
-
     }
-
 }
 
 export { CreateUserUserService }

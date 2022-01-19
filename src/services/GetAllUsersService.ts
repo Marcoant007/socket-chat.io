@@ -7,7 +7,5 @@ class GetAllUsersService {
         const users = await User.find();
         return users
     }
-
 }
-
 export {GetAllUsersService}
