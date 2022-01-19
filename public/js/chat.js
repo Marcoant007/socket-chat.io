@@ -4,52 +4,60 @@ let idChatRoom = "";
 
 function onLoad() {
 
-    const urlParams = new URLSearchParams(window.location.search); //pegar os paramettros da url
-    const name = urlParams.get("name");
-    const avatar = urlParams.get("avatar");
-    const email = urlParams.get("email");
+  const urlParams = new URLSearchParams(window.location.search); //pegar os paramettros da url
+  const name = urlParams.get("name");
+  const avatar = urlParams.get("avatar");
+  const email = urlParams.get("email");
 
-    document.querySelector(".user_logged").innerHTML += `
+  document.querySelector(".user_logged").innerHTML += `
         <img class="avatar_user_logged" src=${avatar}/>
         <strong id="user_logged">${name}</strong>
     `
 
-    socket.emit("start", {
-        name,
-        email,
-        avatar
-    }); // emitir as informações
+  socket.emit("start", {
+    name,
+    email,
+    avatar
+  }); // emitir as informações
+
+  //ficar escutando
+  socket.on("new_users", user => {
+    const existsInDiv = document.getElementById(`user_${user._id}`) // verifica se existe
+
+    if (!existsInDiv) {
+      addUser(user); //se não existir cria, pois estava duplicando
+    }
+  });
 
 
-    //ficar escutando
-    socket.on("new_users", user => {
-        const existsInDiv = document.getElementById(`user_${user._id}`) // verifica se existe
-
-        if (!existsInDiv) {
-            addUser(user); //se não existir cria, pois estava duplicando
-        }
-
-
-    });
-
-    socket.emit("get_users", (users) => {
-        users.map((user) => {
-            if (user.email != email) {
-                addUser(user)
-            }
-        })
+  socket.emit("get_users", (users) => {
+    users.map((user) => {
+      if (user.email != email) {
+        addUser(user)
+      }
     })
+  });
 }
 
 socket.on("message", (data) => {
-   
-      addMessage(data);
-    
-  });
+  if (data.message.roomId === idChatRoom) {
+    addMessage(data);
+  }
+});
+
+
+socket.on("notification", data => {
+  if (data.roomId !== idChatRoom) { // só vou notificar se a janela do chat estiver fechada 
+    const user = document.getElementById(`user_${data.from._id}`);
+    user.insertAdjacentHTML(`afterbegin`, `
+        <div class="notification"></div>
+      `)
+  }
+});
 
 function addUser(user) {
-    const usersList = document.getElementById("users_list");
-    usersList.innerHTML += `
+  const usersList = document.getElementById("users_list");
+  usersList.innerHTML += `
     <li class="user_name_list" id="user_${user._id}" idUser="${user._id}">
     <img class="nav_avatar" src=${user.avatar}/>
     ${user.name}
@@ -57,10 +65,9 @@ function addUser(user) {
 };
 
 
-
 function addMessage(data) {
-    const divMessageUser = document.getElementById("message_user");
-    divMessageUser.innerHTML += `
+  const divMessageUser = document.getElementById("message_user");
+  divMessageUser.innerHTML += `
     <span class="user_name user_name_date">
     <img
       class="img_user"
@@ -74,45 +81,57 @@ function addMessage(data) {
   </div>
     
     ` //+= é para unir as informações que eu to passando com o html ja pronto
-}
+};
 
 
 document.getElementById("users_list").addEventListener("click", (event) => {
-    
-    document.getElementById("message_user").innerHTML = "";
+  const inputMessage = document.getElementById("user_message");
+  inputMessage.classList.remove("hidden");
 
-    if (event.target && event.target.matches("li.user_name_list")) {
-        const idUser = event.target.getAttribute("idUser");
+  document.querySelectorAll("li.user_name_list").forEach(item => item.classList.remove("user_in_focus"));
 
+  document.getElementById("message_user").innerHTML = "";
 
-        socket.emit("start_chat", { idUser }, (response) => {
-            idChatRoom = response.room.idChatRoom;
-      
-            response.messages.forEach((message) => {
-              const data = {
-                message,
-                user: message.to,
-              };
-      
-              addMessage(data);
-            });
-          }); // evento quando um usuário clica no nome do outro
+  if (event.target && event.target.matches("li.user_name_list")) {
+    const idUser = event.target.getAttribute("idUser");
+
+    event.target.classList.add("user_in_focus");
+
+    const notification = document.querySelector(`#user_${idUser} .notification`);
+
+    if (notification) {
+      notification.remove();
     }
-})
+
+
+    socket.emit("start_chat", { idUser }, (response) => {
+      idChatRoom = response.room.idChatRoom;
+
+      response.messages.forEach((message) => {
+        const data = {
+          message,
+          user: message.to,
+        };
+
+        addMessage(data);
+      });
+    }); // evento quando um usuário clica no nome do outro
+  }
+});
 
 document.getElementById("user_message").addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      const message = e.target.value;
-  
-      e.target.value = "";
-  
-      const data = {
-        message,
-        idChatRoom,
-      };
-  
-      socket.emit("message", data);
-    }
-  });
+  if (e.key === "Enter") {
+    const message = e.target.value;
+
+    e.target.value = "";
+
+    const data = {
+      message,
+      idChatRoom,
+    };
+
+    socket.emit("message", data);
+  }
+});
 
 onLoad();

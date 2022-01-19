@@ -4,6 +4,7 @@ import { CreateChatRoomService } from "../services/CreateChatRoomService";
 import { CreateMessageService } from "../services/CreateMessageService";
 import { CreateUserUserService } from "../services/CreateUserService";
 import { GetAllUsersService } from "../services/GetAllUsersService";
+import { GetChatRoomByIdService } from "../services/GetChatRoomById";
 import { GetChatRoomByUsersService } from "../services/GetChatRoomByUsersService";
 import { GetMessagesByChatRoomService } from "../services/GetMessagesByChatRoomService";
 import { GetUserBySocketIdService } from "../services/GetUserBySocketIdService";
@@ -13,14 +14,9 @@ io.on("connect", socket => {
     socket.on("start", async (data) => {
         const { name, email, avatar } = data;
         const createUserService = container.resolve(CreateUserUserService);
-
         const user = await createUserService.execute({ name, email, avatar, socket_id: socket.id });
-
-        //quero que atualize os usuários novos, para todos os usuários menos os usuários do socket 
-        //ou seja envie para todos os usuários, menos para este usuários
         socket.broadcast.emit("new_users", user);
-
-    }); //vou receber as informações
+    }); 
 
     socket.on("get_users", async (callback) => {
         const getAllUsersService = container.resolve(GetAllUsersService);
@@ -55,9 +51,10 @@ io.on("connect", socket => {
         // Buscar as informações do usuário (socket.id)
        
         const getUserBySocketIdService = container.resolve(GetUserBySocketIdService);
-        const user = await getUserBySocketIdService.execute(socket.id);
+        const user = await getUserBySocketIdService.execute(socket.id); // usuário que envia a mensagem
 
         const createMessageService = container.resolve(CreateMessageService);
+        const getChatRoomByIdService = container.resolve(GetChatRoomByIdService)
 
         const message = await createMessageService.execute({
             to: user?._id,
@@ -71,9 +68,14 @@ io.on("connect", socket => {
             user //vamos passar o user pq quando for montar a tela vai precisar saber qual usuário esta mandando mensagem
         })// como eu quero enviar informação para todos usuários vou usar a comunicação global
 
-        // Enviar a mensagem para outros usuários da sala 
-       
-
+        //enviar notificação para usuário correto
+        const room = await getChatRoomByIdService.execute(data.idChatRoom);
+        const userFrom = room.idUsers.find(response => response._id !== user._id);
+        
+        io.to(userFrom.socket_id).emit("notification", {
+            newMessage: true,
+            roomId: data.idChatRoom,
+            from: user
+        })
     })
-
 })
