@@ -1,47 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/tailwind.min.css"
-      integrity="sha512-RntatPOhEcQEA81gC/esYoCkGkL7AYV7TeTPoU+R9zE44/yWxVvLIBfBSaMu78rhoDd73ZeRHXRJN5+aPEK53Q=="
-      crossorigin="anonymous"
-    />
 
-    <link rel="stylesheet" href="css/style.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="icon"  sizes="96x96" href="https://eachone-dev001.s3.amazonaws.com/websocketroxo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/tailwind.min.css"
+    integrity="sha512-RntatPOhEcQEA81gC/esYoCkGkL7AYV7TeTPoU+R9zE44/yWxVvLIBfBSaMu78rhoDd73ZeRHXRJN5+aPEK53Q=="
+    crossorigin="anonymous" />
 
-    <title>Websocket</title>
-  </head>
+  <link rel="stylesheet" href="css/style.css" />
 
-  <body>
-    <div class="w-screen h-screen">
-      <div class="flex flex-1 text-white">
-        <!-- Left -->
-        <div class="w-3/12 h-screen bg-gray-900 position-relative">
-          <div id="users" class="m-3">
-            <div class="bg-green w-4"></div>
-            <ul id="users_list">
-            </ul>
-          </div>
+  <title>Websocket</title>
+</head>
 
-          <div class="footer w-3/12">
-            <div class="user_logged">
-            </div>
-          </div>
+<body>
+  <div class="w-screen h-screen">
+    <div class="flex flex-1 text-white">
+      <!-- Left -->
+      <div class="w-3/12 h-screen bg-gray-900 position-relative">
+        <div id="users" class="m-3">
+          <div class="bg-green w-4"></div>
+          <ul id="users_list">
+          </ul>
         </div>
 
-        <!-- Right -->
-        <div class="w-9/12 bg-gray-700" id="c_message">
-          <div class="message_user" id="message_user">
+        <div class="footer w-3/12">
+          <div class="user_logged">
           </div>
+        </div>
+      </div>
 
-          <input
-            type="text"
-            id="user_message"
-            class="
+      <!-- Right -->
+      <div class="w-9/12 bg-gray-700" id="c_message">
+        <div class="message_user" id="message_user">
+        </div>
+
+        <input type="text" id="user_message" class="
               shadow
               bg-gray-600
               absolute
@@ -52,23 +48,17 @@
               rounded
               focus:outline-none
               hidden
-            "
-            placeholder="Digite sua mensagem"
-          />
-        </div>
+            " placeholder="Digite sua mensagem" />
       </div>
     </div>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
-      integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"
-      integrity="sha512-eVL5Lb9al9FzgR63gDs1MxcDS2wFu3loYAgjIH0+Hg38tCS8Ag62dwKyH+wzDb+QauDpEZjXbMn11blw8cbTJQ=="
-      crossorigin="anonymous"
-    ></script>
-    <script src="js/chat.js"></script>
-  </body>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
+    integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"
+    integrity="sha512-eVL5Lb9al9FzgR63gDs1MxcDS2wFu3loYAgjIH0+Hg38tCS8Ag62dwKyH+wzDb+QauDpEZjXbMn11blw8cbTJQ=="
+    crossorigin="anonymous"></script>
+  <script src="js/chat.js"></script>
+</body>
+
 </html>
